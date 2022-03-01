@@ -1,7 +1,9 @@
-import {readdirSync, readFileSync} from 'fs'
+import {readFileSync} from 'fs'
+const readdirp = require('readdirp')
+import path from 'path'
 import mime from 'mime-types'
 
-import {get_s3} from '../lib/s3'
+import {get_s3, put_objects} from '../lib/s3'
 
 export async function containers(argv) {
   const {name: Bucket} = argv
@@ -22,27 +24,44 @@ export async function containers(argv) {
       .promise()
   }
 
-  if(argv.putFiles) {
-    const filenames = readdirSync(argv.putFiles)
-    const file_objects = filenames.map((filename) => ({
+  if(argv.putFile) {
+    const filename = path.basename(argv.putFile)
+    const file_object = {
       Key: filename,
-      Body: readFileSync(`${argv.putFiles}/${filename}`, {
+      Body: readFileSync(argv.putFile, {
         encoding: 'utf8',
         flag: 'r'
       }),
       ContentType: mime.lookup(filename)
-    }))
-
-    for(const {Key, Body, ContentType} of file_objects) {
-      try {
-        await s3.putObject({Bucket, Key, Body, ContentType}).promise()
-        console.log(`${Bucket}: ${Key}`)
-      } catch(e) {
-        console.error(e)
-      }
     }
 
-    return true
+    try {
+      return await put_objects(s3, Bucket, [file_object])
+    } catch(e) {
+      return console.error(e)
+    }
+  }
+
+  if(argv.putFiles) {
+    const base_path = path.resolve(argv.putFiles)
+    const file_objects = []
+
+    for await (const {path} of readdirp(base_path)) {
+      file_objects.push({
+        Key: path,
+        Body: readFileSync(`${base_path}/${path}`, {
+          encoding: 'utf8',
+          flag: 'r'
+        }),
+        ContentType: mime.lookup(path)
+      })
+    }
+
+    try {
+      return await put_objects(s3, Bucket, file_objects)
+    } catch(e) {
+      return console.error(e)
+    }
   }
 
   console.error('containers supported commands: --empty, --put-files')
