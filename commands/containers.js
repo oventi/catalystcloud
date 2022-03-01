@@ -41,9 +41,9 @@ export async function containers(argv) {
         console.error(e)
       }
     }
-  }
 
-  console.log(argv)
+    return true
+  }
 
   console.error('containers supported commands: --empty, --put-files')
 }
