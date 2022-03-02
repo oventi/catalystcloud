@@ -4,13 +4,11 @@ import path from 'path'
 import {get_s3, get_file_object, put_objects} from '../lib/s3'
 
 export async function containers(argv) {
-  const {name: Bucket} = argv
-
-  if(!Bucket) {
-    console.error('containers requires --name')
+  if(!argv.bucket) {
+    console.error('containers requires --bucket')
   }
 
-  const s3 = get_s3()
+  const {s3, bucket_name: Bucket} = get_s3(argv.bucket)
 
   if(argv.empty) {
     const {Contents} = await s3.listObjects({Bucket}).promise()

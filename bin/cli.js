@@ -19,7 +19,7 @@ const commands = {containers}
 const command = argv._[0]
 
 if(!commands[command]) {
-  console.error('"usage: catalystcloud [command] [params...]')
+  console.error('usage: catalystcloud [command] [params...]')
   process.exit(1)
 }
 
