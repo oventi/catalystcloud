@@ -1,9 +1,7 @@
-import {readFileSync} from 'fs'
 const readdirp = require('readdirp')
 import path from 'path'
-import mime from 'mime-types'
 
-import {get_s3, put_objects} from '../lib/s3'
+import {get_s3, get_file_object, put_objects} from '../lib/s3'
 
 export async function containers(argv) {
   const {name: Bucket} = argv
@@ -16,6 +14,10 @@ export async function containers(argv) {
 
   if(argv.empty) {
     const {Contents} = await s3.listObjects({Bucket}).promise()
+    if(Contents.length === 0) {
+      return console.log(`${Bucket} is already empty`)
+    }
+
     return await s3
       .deleteObjects({
         Bucket,
@@ -26,14 +28,7 @@ export async function containers(argv) {
 
   if(argv.putFile) {
     const filename = path.basename(argv.putFile)
-    const file_object = {
-      Key: filename,
-      Body: readFileSync(argv.putFile, {
-        encoding: 'utf8',
-        flag: 'r'
-      }),
-      ContentType: mime.lookup(filename)
-    }
+    const file_object = get_file_object(filename, argv.putFile)
 
     try {
       return await put_objects(s3, Bucket, [file_object])
@@ -47,14 +42,7 @@ export async function containers(argv) {
     const file_objects = []
 
     for await (const {path} of readdirp(base_path)) {
-      file_objects.push({
-        Key: path,
-        Body: readFileSync(`${base_path}/${path}`, {
-          encoding: 'utf8',
-          flag: 'r'
-        }),
-        ContentType: mime.lookup(path)
-      })
+      file_objects.push(get_file_object(path, `${base_path}/${path}`))
     }
 
     try {
@@ -64,5 +52,7 @@ export async function containers(argv) {
     }
   }
 
-  console.error('containers supported commands: --empty, --put-files')
+  console.error(
+    'containers supported commands: --empty, --put-file, --put-files'
+  )
 }

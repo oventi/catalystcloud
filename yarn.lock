@@ -184,11 +184,6 @@ strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   dependencies:
     ansi-regex "^5.0.1"
 
-traverse-folders@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/traverse-folders/-/traverse-folders-1.1.2.tgz#54c8373ccaca92ce1ada040331dd54a5e645e341"
-  integrity sha512-M76cOa4daKfBxfOOapvG2mCaWojscWngJqcVb0NznyB5bif6uUFi6FS9xKcaSb8YxgDLi+8MvsdxqF6djuevpA==
-
 url@0.10.3:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/url/-/url-0.10.3.tgz#021e4d9c7705f21bbf37d03ceb58767402774c64"
