@@ -59,8 +59,8 @@ Assuming there is a script in package.json to create shortcut `cc`:
 
 ```sh
 yarn cc containers --container [url] --empty
-yarn cc containers --container [url] --put-file ~/dist/index.html
-yarn cc containers --container [url] --put-files ~/dist
+yarn cc containers --container [url] --put-file ./dist/index.html
+yarn cc containers --container [url] --put-files ./dist
 ```
 
 ## License
