@@ -1,15 +1,26 @@
-const readdirp = require('readdirp')
 import path from 'path'
 
-import {get_s3, get_file_object, put_objects} from '../lib/s3'
+import {get_s3, get_file_object, put_objects} from '../../lib/s3'
+import {empty} from './empty'
+import {put_files} from './put_files'
 
-export async function containers(argv) {
+export function containers({container: container_url}) {
+  const {s3, container_name: Bucket} = get_s3(container_url)
+
+  return {
+    empty: () => empty(s3, Bucket),
+    put_files: ({folder}) => put_files(s3, Bucket, folder)
+  }
+}
+
+export async function containers_old(argv) {
   if(!argv.bucket) {
     console.error('containers requires --bucket')
   }
 
   const {s3, bucket_name: Bucket} = get_s3(argv.bucket)
 
+  /*
   if(argv.empty) {
     const {Contents} = await s3.listObjects({Bucket}).promise()
     if(Contents.length === 0) {
@@ -24,17 +35,6 @@ export async function containers(argv) {
       .promise()
   }
 
-  if(argv.putFile) {
-    const filename = path.basename(argv.putFile)
-    const file_object = get_file_object(filename, argv.putFile)
-
-    try {
-      return await put_objects(s3, Bucket, [file_object])
-    } catch(e) {
-      return console.error(e)
-    }
-  }
-
   if(argv.putFiles) {
     const base_path = path.resolve(argv.putFiles)
     const file_objects = []
@@ -45,6 +45,18 @@ export async function containers(argv) {
 
     try {
       return await put_objects(s3, Bucket, file_objects)
+    } catch(e) {
+      return console.error(e)
+    }
+  }
+  */
+
+  if(argv.putFile) {
+    const filename = path.basename(argv.putFile)
+    const file_object = get_file_object(filename, argv.putFile)
+
+    try {
+      return await put_objects(s3, Bucket, [file_object])
     } catch(e) {
       return console.error(e)
     }

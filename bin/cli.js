@@ -5,7 +5,7 @@ import dotenvJSON from 'dotenv-json'
 
 import AWS from 'aws-sdk'
 
-import {containers} from '../commands/containers'
+import {containers} from '../services/containers'
 
 const argv = yargs(hideBin(process.argv)).argv
 const base_dir = path.resolve(process.cwd())
@@ -15,12 +15,17 @@ dotenvJSON({path: env})
 
 AWS.config.update({region: process.env.CATALYSTCLOUD_REGION})
 
-const commands = {containers}
-const command = argv._[0]
-
-if(!commands[command]) {
-  console.error('usage: catalystcloud [command] [params...]')
+const modules = {containers}
+const [mod_name, fn] = argv._
+if(!modules[mod_name]) {
+  console.error(`${mod_name} not supported`)
   process.exit(1)
 }
 
-commands[command](argv)
+const mod = modules[mod_name](argv)
+if(!mod[fn]) {
+  console.error(`${mod_name} ${fn} not supported`)
+  process.exit(1)
+}
+
+mod[fn](argv)

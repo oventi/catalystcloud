@@ -2,8 +2,10 @@
   "name": "catalystcloud",
   "version": "0.0.1",
   "license": "GPL-3.0",
-  "main": "./bin/index.js",
-  "bin": "./bin/index.js",
+  "main": "index.js",
+  "bin": {
+    "catalystcloud": "./bin/index.js"
+  },
   "dependencies": {
     "aws-sdk": "^2.1083.0",
     "dotenv-json": "^1.0.0",
