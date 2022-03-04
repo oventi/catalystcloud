@@ -9,11 +9,11 @@
 This module can be installed in your project using [NPM] or [Yarn]. [Node.js] 14+ required.
 
 ```sh
-npm i https://github.com/oventi/catalystcloud --save
+npm i https://github.com/oventi/catalystcloud#v0.0.3 --save
 ```
 
 ```sh
-yarn add https://github.com/oventi/catalystcloud
+yarn add https://github.com/oventi/catalystcloud#v0.0.3
 ```
 
 ## Usage
