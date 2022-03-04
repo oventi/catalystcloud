@@ -2,7 +2,7 @@ import path from 'path'
 import readdirp from 'readdirp'
 import {get_file_object, put_objects} from '../../lib/s3'
 
-export async function put_file(filepath) {
+export async function put_file(s3, Bucket, filepath) {
   const filename = path.basename(filepath)
   const file_object = get_file_object(filename, filepath)
 
