@@ -1,7 +1,7 @@
-import {ListObjectsCommand, DeleteObjectsCommand} from '@aws-sdk/client-s3'
+import {ListObjectsV2Command, DeleteObjectsCommand} from '@aws-sdk/client-s3'
 
 export async function empty(s3, Bucket) {
-  const {Contents} = await s3.send(new ListObjectsCommand({Bucket}))
+  const {Contents} = await s3.send(new ListObjectsV2Command({Bucket}))
   if(Contents.length === 0) {
     return false // bucket is already empty
   }
