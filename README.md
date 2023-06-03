@@ -9,11 +9,11 @@
 This module can be installed in your project using [NPM] or [Yarn]. [Node.js] 14+ required.
 
 ```sh
-npm i https://github.com/oventi/catalystcloud#v0.0.3 --save
+npm i https://github.com/oventi/catalystcloud#v0.0.4 --save
 ```
 
 ```sh
-yarn add https://github.com/oventi/catalystcloud#v0.0.3
+yarn add https://github.com/oventi/catalystcloud#v0.0.4
 ```
 
 ## Usage
@@ -78,6 +78,6 @@ const container = catalystcloud_containers({container: '[url]'})
 
 ## License
 
-Copyright (c) 2022 [Andrés Proaño Valencia](https://oventi.org)
+Copyright (c) 2022-2023 [Andrés Proaño Valencia](https://oventi.org)
 
 Licensed under the GPL v3 license.
