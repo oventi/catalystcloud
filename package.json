@@ -7,7 +7,7 @@
     "catalystcloud": "./bin/index.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.1083.0",
+    "@aws-sdk/client-s3": "^3.344.0",
     "dotenv-json": "^1.0.0",
     "esm": "^3.2.25",
     "mime-types": "^2.1.34",

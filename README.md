@@ -22,7 +22,6 @@ yarn add https://github.com/oventi/catalystcloud#v0.0.3
 
 The following variables are needed. They can be found at the [API Access](https://dashboard.cloud.catalyst.net.nz/project/api_access/) section.
 
-- CATALYSTCLOUD_REGION
 - CATALYSTCLOUD_ACCESS_KEY_ID
 - CATALYSTCLOUD_SECRET_ACCESS_KEY
 

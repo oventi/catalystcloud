@@ -10,8 +10,7 @@ export function containers({container: container_url}) {
 
   return {
     empty: () => empty(s3, container_name),
-    put_data: ({key, data, content_type}) =>
-      put_data(s3, container_name, key, data, content_type),
+    put_data: ({key, data, content_type}) => put_data(s3, container_name, key, data, content_type),
     put_file: ({file}) => put_file(s3, container_name, file),
     put_files: ({folder}) => put_files(s3, container_name, folder)
   }
